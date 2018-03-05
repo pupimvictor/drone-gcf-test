@@ -53,3 +53,6 @@ pipeline:
     secrets:
       - source: GOOGLE_CREDENTIALS_DEV
         target: TOKEN
+      - docker_username
+      - docker_password
+
