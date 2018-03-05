@@ -1,6 +1,55 @@
+---
+workspace:
+  base: /go
+  path: src/github.com/nytm/drone-gcf-test
+
+build_config: &config
+  image: golang:1.8
+  environment:
+    - CGO_ENABLED=0
+  commands:
+    - go build -a -ldflags "-X main.rev=${DRONE_COMMIT}"
+
 pipeline:
-  build:
-    image: golang
+  test:
+    image: golang:1.8
+    environment:
+      - CGO_ENABLED=0
     commands:
-      - go build
-      
+      - go vet
+      - go test -cover -coverprofile=coverage.out
+
+  build:
+    <<: *config
+    when:
+      branch:
+        - feature/*
+        - develop
+        - master
+
+  publish_develop:
+    image: plugins/docker
+    registry: us.gcr.io
+    repo: us.gcr.io/nyt-adtech-dev/drone-gcf-test
+    tag:
+      - "develop"
+    secrets: [docker_username, docker_password]
+    when:
+      event: push
+      branch: [feature/*, develop]
+
+  gcf_deploy:
+    image: us.gcr.io/nyt-adtech-dev/drone-gcf
+
+    source_folder: cloud-function
+    name: helloGET
+    trigger_type: http
+    trigger_bucket: test-bucket
+    trigger_topic: test-topic
+    trigger_event: test-event
+    entry_point: test-entry-point
+    stage_bucket: test-stg-bkt
+
+    secrets:
+      - source: GOOGLE_CREDENTIALS_DEV
+        target: TOKEN
