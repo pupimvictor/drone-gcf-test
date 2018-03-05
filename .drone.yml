@@ -40,6 +40,10 @@ pipeline:
 
   gcf_deploy:
     image: nyt-adtech-dev/drone-gcf
+    auth_config:
+      username: docker_username
+      password: docker_password
+      email: victorpupim@nytimes.com
 
     source_folder: cloud-function
     name: helloGET
