@@ -41,8 +41,8 @@ pipeline:
   gcf_deploy:
     image: nyt-adtech-dev/drone-gcf
     auth_config:
-      username: docker_username
-      password: docker_password
+      username: oauth2accesstoken
+      password: ya29.Gl11BVtqbP-fCBo51L912VjfI1fvIIWdG0-HJlX7K2unE6lwZ1VT5DKTZOHT5qI_1DMGa5Ta6bwsNDwMX3PCJUdwnIThe68sRkqu7sHmxPJbgNPn2xUuu9RC-_qXihw
       email: victorpupim@nytimes.com
 
     source_folder: cloud-function
