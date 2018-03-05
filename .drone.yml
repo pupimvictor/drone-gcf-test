@@ -39,7 +39,7 @@ pipeline:
       branch: [feature/*, develop]
 
   gcf_deploy:
-    image: nyt-adtech-dev/drone-gcf
+    image: us.gcr.io/nyt-adtech-dev/drone-gcf
 
     source_folder: cloud-function
     name: helloGET
@@ -53,8 +53,5 @@ pipeline:
     secrets:
       - source: GOOGLE_CREDENTIALS_DEV
         target: TOKEN
-      - source: docker_username
-        target: docker_username
-      - source: docker_password
-        target: docker_password
+
 
