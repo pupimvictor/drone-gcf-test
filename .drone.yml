@@ -42,11 +42,11 @@ pipeline:
     image: us.gcr.io/nyt-registry-prd/drone-gcf
 
     cloud_functions:
-      - cf_name: helloGET
+      - name: helloGET
         source_folder: cloud-function
         trigger_type: http
 
-      - cf_name: helloGET
+      - name: helloGET
         source_folder: cloud-function
         trigger_type: http
         trigger_resource: test-r
