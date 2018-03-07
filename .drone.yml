@@ -39,7 +39,7 @@ pipeline:
       branch: [feature/*, develop]
 
   gcf_deploy:
-    image: us.gcr.io/nyt-registry-prd/drone-gcf:develop
+    image: us.gcr.io/nyt-registry-prd/drone-gcf
 
     cloud_functions:
       - cf_name: helloGET
