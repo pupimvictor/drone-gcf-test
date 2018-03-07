@@ -43,12 +43,7 @@ pipeline:
 
     source_folder: cloud-function
     cf_name: helloGET
-    trigger_type: http
-    trigger_bucket: test-bucket
-    trigger_topic: test-topic
-    trigger_event: test-event
     entry_point: test-entry-point
-    stage_bucket: test-stg-bkt
 
     secrets:
       - source: GOOGLE_CREDENTIALS_DEV
