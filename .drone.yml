@@ -46,12 +46,12 @@ pipeline:
         source_folder: cloud-function
         trigger_type: http
 
-      - name: helloGET
+      - name: helloWorld
         source_folder: cloud-function
         trigger_type: http
         trigger_resource: test-r
         trigger_event: test-e
-        entry_point: test-entry
+        entry_point: helloGET
         stage_bucket: test-stg
 
     secrets:
