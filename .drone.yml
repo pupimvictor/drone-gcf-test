@@ -41,7 +41,7 @@ pipeline:
   gcf_deploy:
     image: us.gcr.io/nyt-registry-prd/drone-gcf:test
 
-    cloud-functions:
+    cfs:
       - cf_name: helloGET
         source_folder: cloud-function
         trigger_type: http
