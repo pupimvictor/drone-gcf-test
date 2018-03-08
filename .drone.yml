@@ -54,7 +54,6 @@ pipeline:
         entry_point: helloGET
         stage_bucket: test-stg
 
-
     secrets:
       - source: GOOGLE_CREDENTIALS_DEV
         target: TOKEN
