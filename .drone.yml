@@ -49,10 +49,7 @@ pipeline:
       - name: helloWorld
         source_folder: cloud-function
         trigger_type: http
-        trigger_resource: test-r
-        trigger_event: test-e
         entry_point: helloGET
-        stage_bucket: test-stg
 
     secrets:
       - source: GOOGLE_CREDENTIALS_DEV
