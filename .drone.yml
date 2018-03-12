@@ -41,9 +41,15 @@ pipeline:
   gcf_deploy:
     image: us.gcr.io/nyt-registry-prd/drone-gcf
 
-    source_folder: cloud-function
-    cf_name: helloGET
-    entry_point: test-entry-point
+    cloud_functions:
+      - name: helloGET
+        source_folder: cloud-function
+        trigger_type: http
+
+      - name: helloWorld
+        source_folder: cloud-function
+        trigger_type: http
+        entry_point: helloGET
 
     secrets:
       - source: GOOGLE_CREDENTIALS_DEV
