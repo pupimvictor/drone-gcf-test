@@ -40,6 +40,7 @@ pipeline:
 
   gcf_deploy:
     image: us.gcr.io/nyt-registry-prd/drone-gcf
+    project: nyt-adtech-dev
 
     cloud_functions:
       - name: helloGET
