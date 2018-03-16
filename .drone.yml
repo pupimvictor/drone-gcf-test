@@ -43,13 +43,21 @@ pipeline:
 
     cloud_functions:
       - name: helloGET
-        source_folder: cloud-function
+        source_folder: cloudFunctions/http-function
         trigger_type: http
 
-      - name: helloWorld
-        source_folder: cloud-function
-        trigger_type: http
-        entry_point: helloGET
+      - name: helloTopic
+        source_folder: cloudFunctions/topic-function
+        trigger_type: topic
+        trigger_resource: hello-topic-gcf
+        entry-point: helloPubSub
+
+      - name: helloBucket
+        source_folder: cloudFunctions/bucket-function
+        trigger_type: bucket
+        trigger_resource: hello-bucket-gcf
+        trigger_event: google.storage.object.finalize
+        entry_point: helloGCSGeneric
 
     secrets:
       - source: GOOGLE_CREDENTIALS_DEV
