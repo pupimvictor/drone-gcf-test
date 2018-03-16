@@ -51,7 +51,7 @@ pipeline:
         source_folder: cloudFunctions/topic-function
         trigger_type: topic
         trigger_resource: hello-topic-gcf
-        entry-point: helloPubSub
+        entry_point: helloPubSub
 
       - name: helloBucket
         source_folder: cloudFunctions/bucket-function
