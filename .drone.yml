@@ -10,49 +10,49 @@ build_config: &config
   commands:
     - go build -a -ldflags "-X main.rev=${DRONE_COMMIT}"
 
+pipeline:
+  test:
+    image: golang:1.8
+    environment:
+      - CGO_ENABLED=0
+    commands:
+      - go vet
+      - go test -cover -coverprofile=coverage.out
 
-test:
-  image: golang:1.8
-  environment:
-    - CGO_ENABLED=0
-  commands:
-    - go vet
-    - go test -cover -coverprofile=coverage.out
+  build:
+    <<: *config
+    when:
+      branch:
+        - feature/*
+        - develop
+        - master
 
-build:
-  <<: *config
-  when:
-    branch:
-      - feature/*
-      - develop
-      - master
+  publish_develop:
+    image: plugins/docker
+    registry: us.gcr.io
+    repo: us.gcr.io/nyt-adtech-dev/drone-gcf-test
+    tag:
+      - "develop"
+    secrets: [docker_username, docker_password]
+    when:
+      event: push
+      branch: [feature/*, develop]
 
-publish_develop:
-  image: plugins/docker
-  registry: us.gcr.io
-  repo: us.gcr.io/nyt-adtech-dev/drone-gcf-test
-  tag:
-    - "develop"
-  secrets: [docker_username, docker_password]
-  when:
-    event: push
-    branch: [feature/*, develop]
+  gcf_deploy:
+    image: us.gcr.io/nyt-registry-prd/drone-gcf
 
-gcf_deploy:
-  image: us.gcr.io/nyt-registry-prd/drone-gcf
+    cloud_functions:
+      - name: helloGET
+        source_folder: cloud-function
+        trigger_type: http
 
-  cloud_functions:
-    - name: helloGET
-      source_folder: cloud-function
-      trigger_type: http
+      - name: helloWorld
+        source_folder: cloud-function
+        trigger_type: http
+        entry_point: helloGET
 
-    - name: helloWorld
-      source_folder: cloud-function
-      trigger_type: http
-      entry_point: helloGET
-
-  secrets:
-    - source: GOOGLE_CREDENTIALS_DEV
-      target: TOKEN
+    secrets:
+      - source: GOOGLE_CREDENTIALS_DEV
+        target: TOKEN
 
 
